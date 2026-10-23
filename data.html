@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SUU Baja Racing | App & Data Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            suured: '#C41230',
+            suudark: '#121212',
+            suugray: '#1E1E1E',
+            suuborder: '#2A2A2A',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .page-section { display: none; }
+    .page-section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .placeholder-pattern {
+      background-color: #1a1a1a;
+      background-image: radial-gradient(#2d2d2d 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+  </style>
+</head>
+<body class="bg-suudark text-gray-200 font-sans min-h-screen flex flex-col antialiased selection:bg-suured selection:text-white">
+
+  <!-- Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-suugray/90 backdrop-blur-md border-b border-suuborder">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
+      
+      <!-- Logo / Title -->
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+        <div class="w-10 h-10 rounded bg-suured flex items-center justify-center font-bold text-xl text-white shadow-lg shadow-suured/20">
+          <i class="fa-solid font-black">SAE</i>
+        </div>
+        <div>
+          <span class="text-xl font-extrabold tracking-wider text-white block leading-none">SUU BAJA</span>
+          <span class="text-xs font-semibold text-suured tracking-widest uppercase">Racing Team</span>
+        </div>
+      </div>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-1">
+        <button onclick="switchTab('home')" id="nav-home" class="nav-link px-4 py-2 rounded-md text-sm font-semibold transition-all text-gray-400 hover:text-white hover:bg-suuborder">Home</button>
+        <button onclick="switchTab('new-members')" id="nav-new-
