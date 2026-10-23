@@ -4,462 +4,143 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SUU Baja Racing</title>
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            suured: '#C41230',
-            suudark: '#121212',
-            suugray: '#1E1E1E',
-            suuborder: '#2A2A2A',
-          }
-        }
-      }
-    }
-  </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    .page-section {
-      display: none;
-    }
-    .page-section.active {
-      display: block;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .placeholder-pattern {
-      background-color: #1a1a1a;
-      background-image: radial-gradient(#2d2d2d 1px, transparent 1px);
-      background-size: 16px 16px;
-    }
-  </style>
 </head>
-<body class="bg-suudark text-gray-200 font-sans min-h-screen flex flex-col antialiased selection:bg-suured selection:text-white">
+<body class="bg-gray-950 text-gray-100 font-sans antialiased selection:bg-red-600 selection:text-white">
 
   <!-- Navigation Bar -->
-  <header class="sticky top-0 z-50 bg-suugray/90 backdrop-blur-md border-b border-suuborder">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
-      
-      <!-- Logo / Title -->
-      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
-        <div class="w-10 h-10 rounded bg-suured flex items-center justify-center font-bold text-xl text-white shadow-lg shadow-suured/20">
-          <i class="fa-solid font-black">SAE</i>
+  <header class="sticky top-0 z-50 bg-gray-900/90 backdrop-blur border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo / Brand -->
+        <div class="flex items-center space-x-3">
+          <span class="text-2xl">🏎️</span>
+          <span class="font-bold text-xl tracking-wider text-white">SUU BAJA</span>
         </div>
-        <div>
-          <span class="text-xl font-extrabold tracking-wider text-white block leading-none">SUU BAJA</span>
-          <span class="text-xs font-semibold text-suured tracking-widest uppercase">Racing Team</span>
-        </div>
+
+        <!-- Nav Links -->
+        <nav class="hidden md:flex space-x-6 items-center">
+          <a href="#home" class="hover:text-red-500 transition-colors">Home</a>
+          <a href="#about" class="hover:text-red-500 transition-colors">The Team</a>
+          <a href="#members" class="hover:text-red-500 transition-colors">New Members</a>
+          <a href="#sponsors" class="hover:text-red-500 transition-colors">Sponsors</a>
+          <a href="#gallery" class="hover:text-red-500 transition-colors">Gallery</a>
+          <!-- Data Hub Link routing to your Streamlit Redirect page -->
+          <a href="./data/" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md font-medium transition-colors shadow-lg shadow-red-900/20">
+            📊 Telemetry App
+          </a>
+        </nav>
       </div>
-
-      <!-- Desktop Nav -->
-      <nav class="hidden md:flex space-x-1">
-        <button onclick="switchTab('home')" id="nav-home" class="nav-link px-4 py-2 rounded-md text-sm font-semibold transition-all text-white bg-suured">Home</button>
-        <button onclick="switchTab('new-members')" id="nav-new-members" class="nav-link px-4 py-2 rounded-md text-sm font-semibold transition-all text-gray-400 hover:text-white hover:bg-suuborder">New Members</button>
-        <button onclick="switchTab('sponsors')" id="nav-sponsors" class="nav-link px-4 py-2 rounded-md text-sm font-semibold transition-all text-gray-400 hover:text-white hover:bg-suuborder">Sponsors</button>
-        <button onclick="switchTab('gallery')" id="nav-gallery" class="nav-link px-4 py-2 rounded-md text-sm font-semibold transition-all text-gray-400 hover:text-white hover:bg-suuborder">Gallery</button>
-      </nav>
-
-      <!-- Mobile Menu Button -->
-      <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-suuborder focus:outline-none">
-        <i class="fa-solid fa-bars text-xl"></i>
-      </button>
-    </div>
-
-    <!-- Mobile Nav -->
-    <div id="mobile-menu" class="hidden md:hidden bg-suugray border-b border-suuborder px-4 pt-2 pb-4 space-y-1">
-      <button onclick="switchTab('home')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:bg-suuborder">Home</button>
-      <button onclick="switchTab('new-members')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-suuborder">New Members</button>
-      <button onclick="switchTab('sponsors')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-suuborder">Sponsors</button>
-      <button onclick="switchTab('gallery')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-suuborder">Gallery</button>
     </div>
   </header>
 
-  <!-- Main Content Container -->
-  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
-    <!-- HOME TAB -->
-    <section id="home" class="page-section active space-y-12">
-      
-      <!-- Hero Banner -->
-      <div class="relative rounded-2xl overflow-hidden bg-suugray border border-suuborder p-8 md:p-12 shadow-2xl">
-        <div class="max-w-3xl space-y-6 relative z-10">
-          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-suured/20 text-suured border border-suured/30">
-            Official SUU SAE Club
-          </span>
-          <h1 class="text-4xl md:text-6xl font-black text-white tracking-tight uppercase">
-            Welcome to <span class="text-suured">SUU Baja</span> Racing
-          </h1>
-          <p class="text-lg text-gray-300 leading-relaxed">
-            SUU Baja Racing is a social and engineering group at Southern Utah University that designs, builds, and races an off-road baja style vehicle once a year at a national SAE organized competition.
-          </p>
-          <div class="flex flex-wrap gap-4 pt-2">
-            <button onclick="switchTab('new-members')" class="bg-suured hover:bg-red-700 text-white font-bold px-6 py-3 rounded-lg transition-colors flex items-center space-x-2 shadow-lg shadow-suured/20">
-              <span>Join the Team</span>
-              <i class="fa-solid fa-arrow-right text-sm"></i>
-            </button>
-            <a href="https://www.sae.org" target="_blank" rel="noopener noreferrer" class="bg-suuborder hover:bg-gray-700 text-gray-200 font-bold px-6 py-3 rounded-lg transition-colors flex items-center space-x-2">
-              <span>SAE Website</span>
-              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Visual Hero Space -->
-        <div class="mt-8 md:mt-0 md:absolute md:right-8 md:top-1/2 md:-translate-y-1/2 w-full md:w-80 h-48 md:h-64 rounded-xl border-2 border-dashed border-gray-700 placeholder-pattern flex flex-col items-center justify-center text-gray-500 p-4 text-center">
-          <i class="fa-solid fa-car-burst text-3xl mb-2 text-gray-600"></i>
-          <span class="text-sm font-semibold text-gray-400">Main Vehicle Showcase</span>
-          <span class="text-xs text-gray-600">Space Reserved for Hero Image</span>
-        </div>
-      </div>
-
-      <!-- Information Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        
-        <!-- Who We Are Card -->
-        <div class="bg-suugray rounded-xl border border-suuborder p-6 space-y-4">
-          <div class="flex items-center space-x-3 border-b border-suuborder pb-3">
-            <div class="w-8 h-8 rounded bg-suured/10 text-suured flex items-center justify-center">
-              <i class="fa-solid fa-users"></i>
-            </div>
-            <h2 class="text-xl font-bold text-white">Who We Are</h2>
-          </div>
-          <p class="text-gray-300 leading-relaxed text-sm">
-            Members are current students of the university who dedicate their time to learning the skills necessary to design and build a vehicle meeting SAE requirements. Students not only learn CAD modeling and shop skills, but find a place where they can meet students with common interests, degrees, and goals.
-          </p>
-          <div class="w-full h-40 rounded-lg border-2 border-dashed border-gray-700 placeholder-pattern flex flex-col items-center justify-center text-gray-500">
-            <i class="fa-solid fa-user-group text-2xl mb-1 text-gray-600"></i>
-            <span class="text-xs font-semibold text-gray-400">Team Photo Placeholder</span>
-          </div>
-        </div>
-
-        <!-- What We Do Card -->
-        <div class="bg-suugray rounded-xl border border-suuborder p-6 space-y-4">
-          <div class="flex items-center space-x-3 border-b border-suuborder pb-3">
-            <div class="w-8 h-8 rounded bg-suured/10 text-suured flex items-center justify-center">
-              <i class="fa-solid fa-wrench"></i>
-            </div>
-            <h2 class="text-xl font-bold text-white">What We Do</h2>
-          </div>
-          <p class="text-gray-300 leading-relaxed text-sm">
-            SUU Baja Racing meets every Tuesday and Thursday to design, build, and test a baja style vehicle. During meetings, team members learn CAD modeling skills, fabrication skills, and effective teamwork strategies. Fabrication skills include basic metal working, welding, plasma cutting, and more.
-          </p>
-          <p class="text-gray-300 leading-relaxed text-sm">
-            Members are given tasks to accomplish on the vehicle, determined by what needs to be completed to meet the set deadlines. Team members are encouraged to ask questions and learn from each other.
-          </p>
-        </div>
-      </div>
-
-      <!-- Competition Info Section -->
-      <div class="bg-suugray rounded-xl border border-suuborder p-6 md:p-8 space-y-6">
-        <div class="flex items-center space-x-3 border-b border-suuborder pb-4">
-          <div class="w-8 h-8 rounded bg-suured/10 text-suured flex items-center justify-center">
-            <i class="fa-solid fa-trophy"></i>
-          </div>
-          <h2 class="text-2xl font-bold text-white">The SAE Competition</h2>
-        </div>
-        
-        <p class="text-gray-300 leading-relaxed">
-          The completed vehicle will travel to a national SAE organized event, in which the team competes against 100 other universities. At this event, the team participates in several challenges including:
-        </p>
-
-        <!-- Dynamic Challenges Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-suudark p-4 rounded-lg border border-suuborder flex items-start space-x-3">
-            <i class="fa-solid fa-gauge-high text-suured text-lg mt-0.5"></i>
-            <div>
-              <h3 class="font-bold text-white text-sm">Acceleration Test</h3>
-              <p class="text-xs text-gray-400 mt-1">Testing vehicle speed and drivetrain response.</p>
-            </div>
-          </div>
-          <div class="bg-suudark p-4 rounded-lg border border-suuborder flex items-start space-x-3">
-            <i class="fa-solid fa-mountain text-suured text-lg mt-0.5"></i>
-            <div>
-              <h3 class="font-bold text-white text-sm">Hill Climb</h3>
-              <p class="text-xs text-gray-400 mt-1">Evaluating torque and incline traction limits.</p>
-            </div>
-          </div>
-          <div class="bg-suudark p-4 rounded-lg border border-suuborder flex items-start space-x-3">
-            <i class="fa-solid fa-sliders text-suured text-lg mt-0.5"></i>
-            <div>
-              <h3 class="font-bold text-white text-sm">Suspension & Travel</h3>
-              <p class="text-xs text-gray-400 mt-1">Navigating rough terrain and high drops.</p>
-            </div>
-          </div>
-          <div class="bg-suudark p-4 rounded-lg border border-suuborder flex items-start space-x-3">
-            <i class="fa-solid fa-compass-drafting text-suured text-lg mt-0.5"></i>
-            <div>
-              <h3 class="font-bold text-white text-sm">Maneuverability</h3>
-              <p class="text-xs text-gray-400 mt-1">Testing steering precision and agility.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Endurance Highlight Box -->
-        <div class="bg-suured/10 border border-suured/30 p-5 rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div class="space-y-1">
-            <span class="text-xs font-bold text-suured uppercase tracking-wider">The Main Event</span>
-            <h3 class="text-lg font-extrabold text-white">4-Hour Endurance Race</h3>
-            <p class="text-sm text-gray-300">
-              Held on a custom-made track on the last day of competition. Drivers race wheel to wheel on challenging terrain, competing to see who can make it the furthest.
-            </p>
-          </div>
-          <div class="w-full md:w-48 h-24 rounded border border-dashed border-suured/40 placeholder-pattern flex flex-col items-center justify-center text-center p-2 flex-shrink-0">
-            <i class="fa-solid fa-flag-checkered text-xl text-suured/80 mb-1"></i>
-            <span class="text-xs text-gray-400">Race Action Photo</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- NEW MEMBERS TAB -->
-    <section id="new-members" class="page-section space-y-8">
-      <div class="border-b border-suuborder pb-4">
-        <h1 class="text-3xl font-extrabold text-white">New Members</h1>
-        <p class="text-gray-400 mt-1">Get involved with SUU Baja Racing. All majors and skill levels are welcome!</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        
-        <!-- Meeting Info Box -->
-        <div class="bg-suugray rounded-xl border border-suuborder p-6 space-y-6">
-          <h2 class="text-xl font-bold text-white flex items-center space-x-2">
-            <i class="fa-solid fa-calendar-days text-suured"></i>
-            <span>Meeting Schedule & Location</span>
-          </h2>
-          
-          <div class="space-y-4">
-            <div class="bg-suudark p-4 rounded-lg border border-suuborder flex items-center space-x-4">
-              <div class="p-3 bg-suured/10 rounded-lg text-suured">
-                <i class="fa-solid fa-clock text-xl"></i>
-              </div>
-              <div>
-                <span class="text-xs text-gray-400 uppercase font-semibold">Meeting Times</span>
-                <p class="text-lg font-bold text-white">Tuesday & Thursday</p>
-                <p class="text-sm text-suured font-semibold">5:30 PM – 8:00 PM</p>
-              </div>
-            </div>
-
-            <div class="bg-suudark p-4 rounded-lg border border-suuborder flex items-center space-x-4">
-              <div class="p-3 bg-suured/10 rounded-lg text-suured">
-                <i class="fa-solid fa-location-dot text-xl"></i>
-              </div>
-              <div>
-                <span class="text-xs text-gray-400 uppercase font-semibold">Location</span>
-                <p class="text-lg font-bold text-white">Room TH106</p>
-                <p class="text-sm text-gray-400">Technology & Engineering Building</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Workshop Space Placeholder -->
-          <div class="w-full h-48 rounded-lg border-2 border-dashed border-gray-700 placeholder-pattern flex flex-col items-center justify-center text-gray-500">
-            <i class="fa-solid fa-warehouse text-3xl mb-2 text-gray-600"></i>
-            <span class="text-sm font-semibold text-gray-400">Shop / TH106 Photo</span>
-            <span class="text-xs text-gray-600">Space Reserved for Workshop Image</span>
-          </div>
-        </div>
-
-        <!-- What You Will Learn Card -->
-        <div class="bg-suugray rounded-xl border border-suuborder p-6 space-y-6">
-          <h2 class="text-xl font-bold text-white flex items-center space-x-2">
-            <i class="fa-solid fa-graduation-cap text-suured"></i>
-            <span>What You Will Learn</span>
-          </h2>
-
-          <div class="space-y-4">
-            <div class="p-4 bg-suudark rounded-lg border border-suuborder">
-              <h3 class="font-bold text-white mb-1 flex items-center space-x-2">
-                <i class="fa-solid fa-laptop-code text-suured text-sm"></i>
-                <span>CAD & 3D Design</span>
-              </h3>
-              <p class="text-sm text-gray-400">Master industry-standard computer-aided design modeling software for vehicle parts and chassis design.</p>
-            </div>
-
-            <div class="p-4 bg-suudark rounded-lg border border-suuborder">
-              <h3 class="font-bold text-white mb-1 flex items-center space-x-2">
-                <i class="fa-solid fa-fire-flame-curved text-suured text-sm"></i>
-                <span>Fabrication & Welding</span>
-              </h3>
-              <p class="text-sm text-gray-400">Hands-on experience with basic metal working, TIG/MIG welding, plasma cutting, and machining equipment.</p>
-            </div>
-
-            <div class="p-4 bg-suudark rounded-lg border border-suuborder">
-              <h3 class="font-bold text-white mb-1 flex items-center space-x-2">
-                <i class="fa-solid fa-people-group text-suured text-sm"></i>
-                <span>Team Collaboration</span>
-              </h3>
-              <p class="text-sm text-gray-400">Work directly in project management workflows, meeting technical SAE competition deadlines together.</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- SPONSORS TAB -->
-    <section id="sponsors" class="page-section space-y-8">
-      <div class="border-b border-suuborder pb-4">
-        <h1 class="text-3xl font-extrabold text-white">Our Sponsors</h1>
-        <p class="text-gray-400 mt-1">We are grateful for the support of our generous sponsors and partners.</p>
-      </div>
-
-      <div class="bg-suugray rounded-xl border border-suuborder p-8 text-center space-y-6">
-        <p class="text-gray-300 max-w-2xl mx-auto">
-          SUU Baja Racing relies on sponsor partnerships to fund materials, shop equipment, travel, and competition registration fees.
-        </p>
-
-        <!-- Sponsor Logos Placeholder Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 pt-4">
-          <div class="h-32 rounded-lg border-2 border-dashed border-gray-700 placeholder-pattern flex flex-col items-center justify-center p-4">
-            <i class="fa-solid fa-building text-2xl text-gray-600 mb-1"></i>
-            <span class="text-xs text-gray-500 font-semibold">Sponsor Logo</span>
-          </div>
-          <div class="h-32 rounded-lg border-2 border-dashed border-gray-700 placeholder-pattern flex flex-col items-center justify-center p-4">
-            <i class="fa-solid fa-building text-2xl text-gray-600 mb-1"></i>
-            <span class="text-xs text-gray-500 font-semibold">Sponsor Logo</span>
-          </div>
-          <div class="h-32 rounded-lg border-2 border-dashed border-gray-700 placeholder-pattern flex flex-col items-center justify-center p-4">
-            <i class="fa-solid fa-building text-2xl text-gray-600 mb-1"></i>
-            <span class="text-xs text-gray-500 font-semibold">Sponsor Logo</span>
-          </div>
-          <div class="h-32 rounded-lg border-2 border-dashed border-gray-700 placeholder-pattern flex flex-col items-center justify-center p-4">
-            <i class="fa-solid fa-building text-2xl text-gray-600 mb-1"></i>
-            <span class="text-xs text-gray-500 font-semibold">Sponsor Logo</span>
-          </div>
-        </div>
-
-        <div class="pt-6 border-t border-suuborder max-w-xl mx-auto">
-          <h3 class="text-lg font-bold text-white mb-2">Interested in Sponsoring the Team?</h3>
-          <p class="text-sm text-gray-400 mb-4">Contact us via email to learn about sponsorship tiers and benefits.</p>
-          <a href="mailto:bajaclubsuu@gmail.com" class="inline-flex items-center space-x-2 bg-suured hover:bg-red-700 text-white font-bold px-6 py-2.5 rounded-lg transition-colors">
-            <i class="fa-solid fa-envelope"></i>
-            <span>Sponsor Inquiry</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- GALLERY TAB (COMING SOON) -->
-    <section id="gallery" class="page-section space-y-8">
-      <div class="border-b border-suuborder pb-4">
-        <h1 class="text-3xl font-extrabold text-white">Gallery</h1>
-        <p class="text-gray-400 mt-1">Photos and media from past competitions, builds, and events.</p>
-      </div>
-
-      <!-- Coming Soon Hero Box -->
-      <div class="bg-suugray rounded-2xl border border-suuborder p-12 text-center space-y-6">
-        <div class="w-20 h-20 bg-suured/10 text-suured rounded-full flex items-center justify-center mx-auto text-3xl">
-          <i class="fa-solid fa-images"></i>
-        </div>
-        <div class="space-y-2">
-          <h2 class="text-3xl font-black text-white uppercase tracking-wide">Gallery Coming Soon</h2>
-          <p class="text-gray-400 max-w-md mx-auto">
-            We are currently updating our photos and media showcase for the new season. Check back soon for photos of our latest builds and racing action!
-          </p>
-        </div>
-
-        <!-- Sample Preview Frames -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto pt-6 opacity-40">
-          <div class="h-36 rounded-lg border-2 border-dashed border-gray-600 placeholder-pattern flex flex-col items-center justify-center">
-            <i class="fa-solid fa-image text-2xl text-gray-500 mb-1"></i>
-            <span class="text-xs text-gray-500">Build Photos</span>
-          </div>
-          <div class="h-36 rounded-lg border-2 border-dashed border-gray-600 placeholder-pattern flex flex-col items-center justify-center">
-            <i class="fa-solid fa-image text-2xl text-gray-500 mb-1"></i>
-            <span class="text-xs text-gray-500">Competition Photos</span>
-          </div>
-          <div class="h-36 rounded-lg border-2 border-dashed border-gray-600 placeholder-pattern flex flex-col items-center justify-center">
-            <i class="fa-solid fa-image text-2xl text-gray-500 mb-1"></i>
-            <span class="text-xs text-gray-500">Team Photos</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Footer Section -->
-  <footer class="bg-suugray border-t border-suuborder mt-12 py-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-      
-      <!-- Contact Details -->
-      <div class="space-y-1 text-center md:text-left">
-        <div class="flex items-center justify-center md:justify-start space-x-2 text-white font-bold">
-          <span class="text-suured">SUU</span> Baja Racing
-        </div>
-        <p class="text-xs text-gray-400">
-          Email: <a href="mailto:bajaclubsuu@gmail.com" class="text-gray-300 hover:text-suured transition-colors">bajaclubsuu@gmail.com</a>
-        </p>
-        <p class="text-xs text-gray-400">Location: Technology & Engineering Building (TH106)</p>
-      </div>
-
-      <!-- Social Links -->
-      <div class="flex items-center space-x-4">
-        <a href="https://www.instagram.com/suu_baja_racing" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-lg bg-suudark text-gray-400 hover:text-white hover:bg-suuborder transition-all border border-suuborder flex items-center space-x-2">
-          <i class="fa-brands fa-instagram text-lg text-suured"></i>
-          <span class="text-xs font-semibold">@suu_baja_racing</span>
+  <!-- Hero Section -->
+  <section id="home" class="relative overflow-hidden py-24 sm:py-32 border-b border-gray-800/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6">
+        ENGINEERING EXCELLENCE ON <span class="text-red-600">FOUR WHEELS</span>
+      </h1>
+      <p class="max-w-2xl mx-auto text-lg text-gray-400 mb-10">
+        We design, build, and race off-road vehicles to compete in national Collegiate Baja SAE competitions. Pushing mechanical boundaries through data-driven telemetry and hands-on grit.
+      </p>
+      <div class="flex justify-center gap-4">
+        <a href="./data/" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-all">
+          View Live Telemetry
         </a>
-        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-lg bg-suudark text-gray-400 hover:text-white hover:bg-suuborder transition-all border border-suuborder flex items-center space-x-2">
-          <i class="fa-brands fa-facebook text-lg text-blue-500"></i>
-          <span class="text-xs font-semibold">Facebook</span>
+        <a href="#about" class="bg-gray-800 hover:bg-gray-700 text-gray-200 font-semibold px-6 py-3 rounded-lg transition-all border border-gray-700">
+          Learn More
         </a>
       </div>
-
-      <!-- Copyright -->
-      <div class="text-xs text-gray-500 text-center md:text-right">
-        <p>&copy; Southern Utah University Baja Racing</p>
-        <p class="text-gray-600 mt-0.5">SAE Collegiate Design Series</p>
-      </div>
-
     </div>
+  </section>
+
+  <!-- About / Team Section -->
+  <section id="about" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-gray-800/60">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="text-3xl font-bold tracking-tight mb-4">Built by Students, Driven by Data</h2>
+        <p class="text-gray-400 mb-6">
+          Our team combines rigorous classroom theory with aggressive fabrication and real-world testing. From CVT tuning curves to custom frame geometry, every decision is validated through our live telemetry dashboard.
+        </p>
+        <ul class="space-y-3 text-gray-300">
+          <li class="flex items-center space-x-2">
+            <span class="text-red-500 font-bold">✓</span> <span>Continuous CVT performance optimization</span>
+          </li>
+          <li class="flex items-center space-x-2">
+            <span class="text-red-500 font-bold">✓</span> <span>Custom-built microcontroller & sensor logging</span>
+          </li>
+          <li class="flex items-center space-x-2">
+            <span class="text-red-500 font-bold">✓</span> <span>National Baja SAE competition contenders</span>
+          </li>
+        </ul>
+      </div>
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-8 text-center shadow-xl">
+        <div class="text-5xl mb-4">📈</div>
+        <h3 class="text-xl font-bold mb-2">Real-Time Telemetry Hub</h3>
+        <p class="text-gray-400 text-sm mb-6">
+          Analyze primary/secondary RPM shifts, peak speeds, and lap timing directly through our web interface.
+        </p>
+        <a href="./data/" class="inline-block w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 rounded transition-colors">
+          Launch App Dashboard &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- New Members Section -->
+  <section id="members" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-gray-800/60">
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <h2 class="text-3xl font-bold tracking-tight mb-4">Join the Team</h2>
+      <p class="text-gray-400">
+        No prior experience required! Whether you're into mechanical design, electrical systems, business, or machining, there's a place for you on the team.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl">
+        <h3 class="text-xl font-bold text-red-500 mb-2">Design & Fabrication</h3>
+        <p class="text-gray-400 text-sm">Learn CAD, welding, and structural analysis while building our next competition frame.</p>
+      </div>
+      <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl">
+        <h3 class="text-xl font-bold text-red-500 mb-2">Electronics & Code</h3>
+        <p class="text-gray-400 text-sm">Work on our Raspberry Pi data loggers, sensors, and Streamlit telemetry pipelines.</p>
+      </div>
+      <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl">
+        <h3 class="text-xl font-bold text-red-500 mb-2">Business & Logistics</h3>
+        <p class="text-gray-400 text-sm">Manage sponsorships, event planning, budgeting, and team marketing efforts.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sponsors Section -->
+  <section id="sponsors" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-gray-800/60 text-center">
+    <h2 class="text-3xl font-bold tracking-tight mb-4">Our Sponsors</h2>
+    <p class="text-gray-400 max-w-xl mx-auto mb-10">
+      Thank you to our industry partners and supporters who make it possible to build, test, and compete at the national level.
+    </p>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="bg-gray-900 border border-gray-800 p-8 rounded-lg flex items-center justify-center text-gray-500 font-semibold">[ Sponsor Logo ]</div>
+      <div class="bg-gray-900 border border-gray-800 p-8 rounded-lg flex items-center justify-center text-gray-500 font-semibold">[ Sponsor Logo ]</div>
+      <div class="bg-gray-900 border border-gray-800 p-8 rounded-lg flex items-center justify-center text-gray-500 font-semibold">[ Sponsor Logo ]</div>
+      <div class="bg-gray-900 border border-gray-800 p-8 rounded-lg flex items-center justify-center text-gray-500 font-semibold">[ Sponsor Logo ]</div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold tracking-tight mb-4 text-center">Gallery & Action Shots</h2>
+    <p class="text-gray-400 text-center mb-10">Snapshots from testing days, shop work, and competition events.</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div class="bg-gray-900 border border-gray-800 h-64 rounded-xl flex items-center justify-center text-gray-600">[ Action Photo 1 ]</div>
+      <div class="bg-gray-900 border border-gray-800 h-64 rounded-xl flex items-center justify-center text-gray-600">[ Shop Photo 2 ]</div>
+      <div class="bg-gray-900 border border-gray-800 h-64 rounded-xl flex items-center justify-center text-gray-600">[ Testing Photo 3 ]</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 border-t border-gray-800 py-8 text-center text-gray-500 text-sm">
+    <p>&copy; 2026 SUU Baja Racing. All rights reserved.</p>
   </footer>
 
-  <!-- Single-Page Tab Switching Script -->
-  <script>
-    function switchTab(tabId) {
-      // Hide all section pages
-      const sections = document.querySelectorAll('.page-section');
-      sections.forEach(sec => sec.classList.remove('active'));
-
-      // Deactivate all nav link styles
-      const navLinks = document.querySelectorAll('.nav-link');
-      navLinks.forEach(link => {
-        link.classList.remove('bg-suured', 'text-white');
-        link.classList.add('text-gray-400', 'hover:text-white', 'hover:bg-suuborder');
-      });
-
-      // Show targeted section
-      const activeSection = document.getElementById(tabId);
-      if (activeSection) {
-        activeSection.classList.add('active');
-      }
-
-      // Highlight targeted nav button
-      const activeNav = document.getElementById(`nav-${tabId}`);
-      if (activeNav) {
-        activeNav.classList.remove('text-gray-400', 'hover:text-white', 'hover:bg-suuborder');
-        activeNav.classList.add('bg-suured', 'text-white');
-      }
-
-      // Close mobile menu if open
-      const mobileMenu = document.getElementById('mobile-menu');
-      if (!mobileMenu.classList.contains('hidden')) {
-        mobileMenu.classList.add('hidden');
-      }
-
-      // Scroll smoothly back to top on switch
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function toggleMobileMenu() {
-      const mobileMenu = document.getElementById('mobile-menu');
-      mobileMenu.classList.toggle('hidden');
-    }
-  </script>
 </body>
 </html>
